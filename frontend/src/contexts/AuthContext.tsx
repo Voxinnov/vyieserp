@@ -1,14 +1,19 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 
 // Define user roles type
-export type UserRole = "super_admin" | "advocate" | "associate" | "clerk" | "accountant" | "client";
+export type UserRole = string; // Relaxed from specific union due to inconsistencies
 
 export interface User {
     id: number;
     name: string;
     email: string;
     role: UserRole;
+    organization_id?: number;
+    role_id?: number;
+    permissions?: any[];
     avatar?: string;
+    username?: string;
+    token?: string;
 }
 
 interface AuthContextType {
@@ -30,17 +35,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         // Simulate fetching user from token on load
         const storedToken = localStorage.getItem("access_token");
+        const storedUser = localStorage.getItem("user");
         if (storedToken) {
-            // TODO: Validate token with backend /me endpoint
-            // For now, we simulate a user if token exists
             setToken(storedToken);
-            // Mock user restoration (in production, fetch this)
-            if (!user) {
+            if (storedUser) {
+                try {
+                    setUser(JSON.parse(storedUser));
+                } catch (e) {
+                    console.error("Failed to parse stored user", e);
+                }
+            } else {
+                // Mock user restoration fallback (only if nothing stored)
                 setUser({
                     id: 1,
                     name: "John Doe",
                     email: "admin@vyisedesk.com",
-                    role: "super_admin" // Default for dev
+                    role: "super_admin"
                 });
             }
         }
@@ -51,12 +61,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setToken(newToken);
         setUser(newUser);
         localStorage.setItem("access_token", newToken);
+        localStorage.setItem("user", JSON.stringify(newUser));
     };
 
     const logout = () => {
         setToken(null);
         setUser(null);
         localStorage.removeItem("access_token");
+        localStorage.removeItem("user");
     };
 
     return (

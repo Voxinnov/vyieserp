@@ -3,6 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import AppSidebar from "./AppSidebar";
 import Navbar from "./Navbar";
 import { useState, useEffect } from "react";
+import { Toaster } from "sonner";
 
 export default function DashboardLayout() {
     const { isAuthenticated, isLoading } = useAuth();
@@ -38,6 +39,7 @@ export default function DashboardLayout() {
                     <Outlet />
                 </main>
             </div>
+            <Toaster position="top-right" richColors />
         </div>
     )
 }

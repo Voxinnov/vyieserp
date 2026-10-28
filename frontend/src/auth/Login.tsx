@@ -9,11 +9,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Gavel } from "lucide-react";
+import { Loader2, Gavel, AlertCircle } from "lucide-react";
+import api from "@/lib/api";
+
 
 const loginSchema = z.object({
-    email: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+    username: z.string().min(3, { message: "Username must be at least 3 characters" }),
+    password: z.string().min(1, { message: "Password is required" }),
     rememberMe: z.boolean().optional(),
 });
 
@@ -23,11 +25,12 @@ export default function Login() {
     const { login } = useAuth();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const [loginError, setLoginError] = useState<string | null>(null);
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            email: "",
+            username: "",
             password: "",
             rememberMe: false,
         },
@@ -35,19 +38,36 @@ export default function Login() {
 
     const onSubmit = async (data: LoginFormValues) => {
         setIsLoading(true);
-        console.log("Login data:", data);
-        // Simulate API call
-        setTimeout(() => {
-            // Mock successful login
-            login("mock-jwt-token", {
-                id: 1,
-                name: "John Advocate",
-                email: data.email,
-                role: "advocate"
+        setLoginError(null);
+        try {
+            const response = await api.post("/auth/signin", {
+                username: data.username,
+                password: data.password
             });
+
+            console.log("Login success:", response.data);
+
+            const userData = {
+                id: response.data.id,
+                name: response.data.username, // UI uses 'name', backend returns 'username'
+                username: response.data.username,
+                email: response.data.email,
+                role: response.data.roles,
+                organization_id: response.data.organization_id,
+                role_id: response.data.role_id,
+                permissions: response.data.permissions,
+                token: response.data.accessToken
+            };
+
+            login(response.data.accessToken, userData);
             navigate("/dashboard");
+        } catch (error: any) {
+            console.error("Login error:", error);
+            const message = error.response?.data?.message || "Invalid credentials or server error";
+            setLoginError(message);
+        } finally {
             setIsLoading(false);
-        }, 1500);
+        }
     };
 
     return (
@@ -63,15 +83,21 @@ export default function Login() {
                 </CardHeader>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <CardContent className="grid gap-4">
+                        {loginError && (
+                            <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-2 text-sm text-destructive">
+                                <AlertCircle className="h-4 w-4" />
+                                <span>{loginError}</span>
+                            </div>
+                        )}
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="username">Username</Label>
                             <Input
-                                id="email"
-                                type="email"
-                                placeholder="advocate@example.com"
-                                {...register("email")}
+                                id="username"
+                                type="text"
+                                placeholder="Enter your username"
+                                {...register("username")}
                             />
-                            {errors.email && <p className="text-destructive text-xs">{errors.email.message}</p>}
+                            {errors.username && <p className="text-destructive text-xs">{errors.username.message}</p>}
                         </div>
                         <div className="grid gap-2">
                             <div className="flex items-center justify-between">

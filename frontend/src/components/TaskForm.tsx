@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft } from "lucide-react";
 
 interface TaskFormData {
@@ -17,6 +18,7 @@ interface TaskFormData {
     doc_collection_request: boolean;
     doc_collection_message?: string;
     description: string;
+    status: string;
 }
 
 interface TaskFormProps {
@@ -39,7 +41,8 @@ export default function TaskForm({ initialData, onSubmit, isSubmitting = false, 
         tags: "",
         doc_collection_request: false,
         description: "",
-        doc_collection_message: ""
+        doc_collection_message: "",
+        status: "new"
     });
 
     useEffect(() => {
@@ -126,6 +129,24 @@ export default function TaskForm({ initialData, onSubmit, isSubmitting = false, 
                         onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
                         placeholder="e.g. Urgent, Civil, Injunction"
                     />
+                </div>
+
+                <div className="col-span-2 md:col-span-1 space-y-2">
+                    <label className="text-sm font-medium">Status</label>
+                    <Select
+                        value={formData.status}
+                        onValueChange={(val) => setFormData({ ...formData, status: val })}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="new">New</SelectItem>
+                            <SelectItem value="in_progress">In Progress</SelectItem>
+                            <SelectItem value="completed">Completed</SelectItem>
+                            <SelectItem value="on_hold">On Hold</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div className="col-span-2 space-y-4 border rounded-md p-4 bg-muted/20">

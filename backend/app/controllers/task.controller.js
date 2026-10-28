@@ -43,10 +43,26 @@ exports.create = (req, res) => {
 
 // Retrieve all Tasks from the database.
 exports.findAll = (req, res) => {
+    const userId = req.userId;
+    const userRole = req.userRole;
     const case_number = req.query.case_number;
-    var condition = case_number ? { case_number: { [Op.like]: `%${case_number}%` } } : null;
 
-    Task.findAll({ where: condition, include: ["client"] })
+    let condition = {};
+    if (case_number) {
+        condition.case_number = { [Op.like]: `%${case_number}%` };
+    }
+
+    // Role-based filtering
+    const isAdmin = userRole === 'admin' || userRole === 'Admin';
+    if (!isAdmin) {
+        // Non-admins see only tasks assigned to them
+        condition.assigned_to = userId;
+    }
+
+    Task.findAll({
+        where: condition,
+        include: ["client", { model: db.user, as: "assignee", attributes: ['username'] }]
+    })
         .then(data => {
             res.send(data);
         })

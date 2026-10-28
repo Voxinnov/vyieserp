@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { Plus, Pencil, Trash2, Search } from "lucide-react";
 
 interface Task {
@@ -18,6 +19,7 @@ interface Task {
     doc_collection_request: boolean;
     doc_collection_message?: string;
     description: string;
+    status: string;
     client?: {
         name: string;
     };
@@ -64,6 +66,16 @@ export default function Tasks() {
         }
     };
 
+    const getStatusColor = (status: string) => {
+        switch (status?.toLowerCase()) {
+            case 'new': return 'bg-blue-500 hover:bg-blue-600';
+            case 'in_progress': return 'bg-yellow-500 hover:bg-yellow-600';
+            case 'completed': return 'bg-green-500 hover:bg-green-600';
+            case 'on_hold': return 'bg-red-500 hover:bg-red-600';
+            default: return 'bg-secondary text-secondary-foreground';
+        }
+    };
+
     const filteredTasks = tasks.filter(task =>
         task.case_number?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         task.court?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -102,7 +114,9 @@ export default function Tasks() {
                                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Court</th>
                                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Next Hearing</th>
                                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Advocates</th>
+                                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Status</th>
                                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Tags</th>
+                                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Description/Narration</th>
                                 <th className="h-12 px-4 text-right align-middle font-medium text-muted-foreground">Actions</th>
                             </tr>
                         </thead>
@@ -123,7 +137,17 @@ export default function Tasks() {
                                         <td className="p-4 align-middle">{task.next_hearing_date}</td>
                                         <td className="p-4 align-middle">{task.advocates}</td>
                                         <td className="p-4 align-middle">
+                                            <Badge className={getStatusColor(task.status)}>
+                                                {(task.status || 'new').replace('_', ' ')}
+                                            </Badge>
+                                        </td>
+                                        <td className="p-4 align-middle">
                                             {task.tags && <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">{task.tags}</span>}
+                                        </td>
+                                        <td className="p-4 align-middle">
+                                            <div className="max-w-[300px] truncate text-xs text-muted-foreground" title={task.description}>
+                                                {task.description}
+                                            </div>
                                         </td>
                                         <td className="p-4 align-middle text-right">
                                             <div className="flex items-center justify-end gap-2">

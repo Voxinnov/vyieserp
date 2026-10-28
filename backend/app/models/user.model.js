@@ -20,6 +20,33 @@ module.exports = (sequelize, Sequelize) => {
         },
         office_name: {
             type: Sequelize.STRING
+        },
+        number_of_users: {
+            type: Sequelize.STRING
+        },
+        logo: {
+            type: Sequelize.STRING
+        },
+        country: {
+            type: Sequelize.STRING
+        },
+        state: {
+            type: Sequelize.STRING
+        },
+        city: {
+            type: Sequelize.STRING
+        },
+        pincode: {
+            type: Sequelize.STRING
+        },
+        address: {
+            type: Sequelize.TEXT
+        },
+        organization_id: {
+            type: Sequelize.INTEGER
+        },
+        role_id: {
+            type: Sequelize.INTEGER
         }
     });
 

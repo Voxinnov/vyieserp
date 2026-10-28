@@ -1,0 +1,165 @@
+nohup: ignoring input
+
+> backend@1.0.0 start
+> node server.js
+
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+Loading User Routes...
+(node:2668072) [SEQUELIZE0004] DeprecationWarning: A boolean value was passed to options.operatorsAliases. This is a no-op with v5 and should be removed.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Server is running on port 8085.
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'roles' AND TABLE_SCHEMA = 'legal_erp_db_v2'
+Executing (default): SHOW FULL COLUMNS FROM `roles`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'roles' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='legal_erp_db_v2' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `roles` CHANGE `name` `name` VARCHAR(255);
+Executing (default): ALTER TABLE `roles` CHANGE `description` `description` VARCHAR(255);
+Executing (default): ALTER TABLE `roles` CHANGE `permissions` `permissions` JSON;
+Executing (default): ALTER TABLE `roles` CHANGE `createdAt` `createdAt` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `roles` CHANGE `updatedAt` `updatedAt` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `roles`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'users' AND TABLE_SCHEMA = 'legal_erp_db_v2'
+Executing (default): SHOW FULL COLUMNS FROM `users`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'users' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='legal_erp_db_v2' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `users` CHANGE `username` `username` VARCHAR(255);
+Executing (default): ALTER TABLE `users` CHANGE `email` `email` VARCHAR(255);
+Executing (default): ALTER TABLE `users` CHANGE `password` `password` VARCHAR(255);
+Executing (default): ALTER TABLE `users` CHANGE `role` `role` VARCHAR(255);
+Executing (default): ALTER TABLE `users` CHANGE `mobile` `mobile` VARCHAR(255);
+Executing (default): ALTER TABLE `users` CHANGE `bar_registration_number` `bar_registration_number` VARCHAR(255);
+Executing (default): ALTER TABLE `users` CHANGE `office_name` `office_name` VARCHAR(255);
+Executing (default): ALTER TABLE `users` CHANGE `createdAt` `createdAt` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `users` CHANGE `updatedAt` `updatedAt` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `users` CHANGE `status` `status` VARCHAR(255) DEFAULT 'Active';
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='users' AND constraint_name = 'users_ibfk_1' AND TABLE_SCHEMA = 'legal_erp_db_v2';
+Executing (default): ALTER TABLE `users` DROP FOREIGN KEY `users_ibfk_1`;
+Executing (default): ALTER TABLE `users` ADD FOREIGN KEY (`roleId`) REFERENCES `roles` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+Executing (default): SHOW INDEX FROM `users`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'clients' AND TABLE_SCHEMA = 'legal_erp_db_v2'
+Executing (default): SHOW FULL COLUMNS FROM `clients`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'clients' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='legal_erp_db_v2' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `clients` CHANGE `name` `name` VARCHAR(255);
+Executing (default): ALTER TABLE `clients` CHANGE `email` `email` VARCHAR(255);
+Executing (default): ALTER TABLE `clients` CHANGE `phone` `phone` VARCHAR(255);
+Executing (default): ALTER TABLE `clients` CHANGE `address` `address` TEXT;
+Executing (default): ALTER TABLE `clients` CHANGE `tax_id` `tax_id` VARCHAR(255);
+Executing (default): ALTER TABLE `clients` CHANGE `status` `status` VARCHAR(255) DEFAULT 'active';
+Executing (default): ALTER TABLE `clients` CHANGE `createdAt` `createdAt` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `clients` CHANGE `updatedAt` `updatedAt` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `clients`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'matters' AND TABLE_SCHEMA = 'legal_erp_db_v2'
+Executing (default): SHOW FULL COLUMNS FROM `matters`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'matters' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='legal_erp_db_v2' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `matters` CHANGE `title` `title` VARCHAR(255);
+Executing (default): ALTER TABLE `matters` CHANGE `description` `description` TEXT;
+Executing (default): ALTER TABLE `matters` CHANGE `case_number` `case_number` VARCHAR(255);
+Executing (default): ALTER TABLE `matters` CHANGE `court_name` `court_name` VARCHAR(255);
+Executing (default): ALTER TABLE `matters` CHANGE `status` `status` VARCHAR(255) DEFAULT 'open';
+Executing (default): ALTER TABLE `matters` CHANGE `priority` `priority` VARCHAR(255) DEFAULT 'medium';
+Executing (default): ALTER TABLE `matters` CHANGE `createdAt` `createdAt` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `matters` CHANGE `updatedAt` `updatedAt` DATETIME NOT NULL;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='matters' AND constraint_name = 'matters_ibfk_7' AND TABLE_SCHEMA = 'legal_erp_db_v2';
+Executing (default): ALTER TABLE `matters` DROP FOREIGN KEY `matters_ibfk_7`;
+Executing (default): ALTER TABLE `matters` ADD FOREIGN KEY (`assigned_to`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='matters' AND constraint_name = 'matters_ibfk_8' AND TABLE_SCHEMA = 'legal_erp_db_v2';
+Executing (default): ALTER TABLE `matters` DROP FOREIGN KEY `matters_ibfk_8`;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='matters' AND constraint_name = 'matters_ibfk_9' AND TABLE_SCHEMA = 'legal_erp_db_v2';
+Executing (default): ALTER TABLE `matters` DROP FOREIGN KEY `matters_ibfk_9`;
+Executing (default): ALTER TABLE `matters` ADD FOREIGN KEY (`clientId`) REFERENCES `clients` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+Executing (default): ALTER TABLE `matters` ADD FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+Executing (default): SHOW INDEX FROM `matters`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'tasks' AND TABLE_SCHEMA = 'legal_erp_db_v2'
+Executing (default): SHOW FULL COLUMNS FROM `tasks`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'tasks' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='legal_erp_db_v2' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `tasks` CHANGE `case_number` `case_number` VARCHAR(255);
+Executing (default): ALTER TABLE `tasks` CHANGE `court` `court` VARCHAR(255);
+Executing (default): ALTER TABLE `tasks` CHANGE `cnr_number` `cnr_number` VARCHAR(255);
+Executing (default): ALTER TABLE `tasks` CHANGE `last_hearing_date` `last_hearing_date` DATE;
+Executing (default): ALTER TABLE `tasks` CHANGE `next_hearing_date` `next_hearing_date` DATE;
+Executing (default): ALTER TABLE `tasks` CHANGE `advocates` `advocates` TEXT;
+Executing (default): ALTER TABLE `tasks` CHANGE `tags` `tags` VARCHAR(255);
+Executing (default): ALTER TABLE `tasks` CHANGE `doc_collection_request` `doc_collection_request` TINYINT(1) DEFAULT false;
+Executing (default): ALTER TABLE `tasks` CHANGE `doc_collection_message` `doc_collection_message` TEXT;
+Executing (default): ALTER TABLE `tasks` CHANGE `description` `description` TEXT;
+Executing (default): ALTER TABLE `tasks` CHANGE `createdAt` `createdAt` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `tasks` CHANGE `updatedAt` `updatedAt` DATETIME NOT NULL;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='tasks' AND constraint_name = 'tasks_ibfk_1' AND TABLE_SCHEMA = 'legal_erp_db_v2';
+Executing (default): ALTER TABLE `tasks` DROP FOREIGN KEY `tasks_ibfk_1`;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='tasks' AND constraint_name = 'tasks_ibfk_2' AND TABLE_SCHEMA = 'legal_erp_db_v2';
+Executing (default): ALTER TABLE `tasks` DROP FOREIGN KEY `tasks_ibfk_2`;
+Executing (default): ALTER TABLE `tasks` ADD FOREIGN KEY (`clientId`) REFERENCES `clients` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+Executing (default): ALTER TABLE `tasks` ADD FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+Executing (default): SHOW INDEX FROM `tasks`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'todos' AND TABLE_SCHEMA = 'legal_erp_db_v2'
+Executing (default): SHOW FULL COLUMNS FROM `todos`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'todos' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='legal_erp_db_v2' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `todos` CHANGE `what_to_do` `what_to_do` VARCHAR(255) NOT NULL;
+Executing (default): ALTER TABLE `todos` CHANGE `case_number` `case_number` VARCHAR(255);
+Executing (default): ALTER TABLE `todos` CHANGE `details` `details` TEXT;
+Executing (default): ALTER TABLE `todos` CHANGE `due_date` `due_date` DATE;
+Executing (default): ALTER TABLE `todos` CHANGE `is_repeat` `is_repeat` TINYINT(1) DEFAULT false;
+Executing (default): ALTER TABLE `todos` CHANGE `repeat_interval` `repeat_interval` ENUM('daily', 'weekly', 'monthly', 'yearly', 'none') DEFAULT 'none';
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='todos' AND constraint_name = 'todos_ibfk_1' AND TABLE_SCHEMA = 'legal_erp_db_v2';
+Executing (default): ALTER TABLE `todos` DROP FOREIGN KEY `todos_ibfk_1`;
+Executing (default): ALTER TABLE `todos` ADD FOREIGN KEY (`assigned_to`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+Executing (default): ALTER TABLE `todos` CHANGE `createdAt` `createdAt` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `todos` CHANGE `updatedAt` `updatedAt` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `todos`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'attendances' AND TABLE_SCHEMA = 'legal_erp_db_v2'
+Executing (default): SHOW FULL COLUMNS FROM `attendances`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'attendances' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='legal_erp_db_v2' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `attendances` CHANGE `date` `date` DATE NOT NULL;
+Executing (default): ALTER TABLE `attendances` CHANGE `check_in` `check_in` TIME;
+Executing (default): ALTER TABLE `attendances` CHANGE `check_out` `check_out` TIME;
+Executing (default): ALTER TABLE `attendances` CHANGE `status` `status` ENUM('Present', 'Absent', 'Half Day', 'Leave', 'Paid Leave', 'Holiday', 'Weekend') DEFAULT 'Absent';
+Executing (default): ALTER TABLE `attendances` CHANGE `created_by` `created_by` INTEGER;
+Executing (default): ALTER TABLE `attendances` CHANGE `updated_by` `updated_by` INTEGER;
+Executing (default): ALTER TABLE `attendances` CHANGE `createdAt` `createdAt` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `attendances` CHANGE `updatedAt` `updatedAt` DATETIME NOT NULL;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='attendances' AND constraint_name = 'attendances_ibfk_1' AND TABLE_SCHEMA = 'legal_erp_db_v2';
+Executing (default): ALTER TABLE `attendances` DROP FOREIGN KEY `attendances_ibfk_1`;
+Executing (default): ALTER TABLE `attendances` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+Executing (default): SHOW INDEX FROM `attendances`
+Database synced with alter: true
+Executing (default): SELECT `roles`.`id`, `roles`.`name`, `roles`.`description`, `roles`.`permissions`, `roles`.`createdAt`, `roles`.`updatedAt`, `users`.`id` AS `users.id` FROM `roles` AS `roles` LEFT OUTER JOIN `users` AS `users` ON `roles`.`id` = `users`.`roleId`;
+[0mGET /api/roles [36m304[0m 22.087 ms - -[0m
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`status`, `users`.`role`, `attendances`.`id` AS `attendances.id`, `attendances`.`date` AS `attendances.date`, `attendances`.`check_in` AS `attendances.check_in`, `attendances`.`check_out` AS `attendances.check_out`, `attendances`.`status` AS `attendances.status`, `attendances`.`created_by` AS `attendances.created_by`, `attendances`.`updated_by` AS `attendances.updated_by`, `attendances`.`createdAt` AS `attendances.createdAt`, `attendances`.`updatedAt` AS `attendances.updatedAt`, `attendances`.`user_id` AS `attendances.user_id` FROM `users` AS `users` LEFT OUTER JOIN `attendances` AS `attendances` ON `users`.`id` = `attendances`.`user_id` AND `attendances`.`date` = '2026-01-28';
+[0mGET /api/attendance/daily?date=2026-01-28 [32m200[0m 13.937 ms - 337[0m
+Executing (default): SELECT `attendance`.`id`, `attendance`.`date`, `attendance`.`check_in`, `attendance`.`check_out`, `attendance`.`status`, `attendance`.`created_by`, `attendance`.`updated_by`, `attendance`.`createdAt`, `attendance`.`updatedAt`, `attendance`.`user_id`, `user`.`id` AS `user.id`, `user`.`username` AS `user.username` FROM `attendances` AS `attendance` LEFT OUTER JOIN `users` AS `user` ON `attendance`.`user_id` = `user`.`id` WHERE `attendance`.`date` BETWEEN '2026-01-01' AND '2026-01-31';
+[0mGET /api/attendance/monthly?month=1&year=2026 [32m200[0m 6.496 ms - 2[0m
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`status`, `users`.`role`, `attendances`.`id` AS `attendances.id`, `attendances`.`date` AS `attendances.date`, `attendances`.`check_in` AS `attendances.check_in`, `attendances`.`check_out` AS `attendances.check_out`, `attendances`.`status` AS `attendances.status`, `attendances`.`created_by` AS `attendances.created_by`, `attendances`.`updated_by` AS `attendances.updated_by`, `attendances`.`createdAt` AS `attendances.createdAt`, `attendances`.`updatedAt` AS `attendances.updatedAt`, `attendances`.`user_id` AS `attendances.user_id` FROM `users` AS `users` LEFT OUTER JOIN `attendances` AS `attendances` ON `users`.`id` = `attendances`.`user_id` AND `attendances`.`date` = '2026-01-28';
+[0mGET /api/attendance/daily?date=2026-01-28 [36m304[0m 4.368 ms - -[0m
+Executing (default): SELECT `roles`.`id`, `roles`.`name`, `roles`.`description`, `roles`.`permissions`, `roles`.`createdAt`, `roles`.`updatedAt`, `users`.`id` AS `users.id` FROM `roles` AS `roles` LEFT OUTER JOIN `users` AS `users` ON `roles`.`id` = `users`.`roleId`;
+[0mGET /api/roles [32m200[0m 9.640 ms - 177[0m
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`status`, `users`.`role`, `attendances`.`id` AS `attendances.id`, `attendances`.`date` AS `attendances.date`, `attendances`.`check_in` AS `attendances.check_in`, `attendances`.`check_out` AS `attendances.check_out`, `attendances`.`status` AS `attendances.status`, `attendances`.`created_by` AS `attendances.created_by`, `attendances`.`updated_by` AS `attendances.updated_by`, `attendances`.`createdAt` AS `attendances.createdAt`, `attendances`.`updatedAt` AS `attendances.updatedAt`, `attendances`.`user_id` AS `attendances.user_id` FROM `users` AS `users` LEFT OUTER JOIN `attendances` AS `attendances` ON `users`.`id` = `attendances`.`user_id` AND `attendances`.`date` = '2026-01-28';
+[0mGET /api/attendance/daily?date=2026-01-28 [32m200[0m 5.058 ms - 337[0m
+Executing (default): SELECT `attendance`.`id`, `attendance`.`date`, `attendance`.`check_in`, `attendance`.`check_out`, `attendance`.`status`, `attendance`.`created_by`, `attendance`.`updated_by`, `attendance`.`createdAt`, `attendance`.`updatedAt`, `attendance`.`user_id`, `user`.`id` AS `user.id`, `user`.`username` AS `user.username` FROM `attendances` AS `attendance` LEFT OUTER JOIN `users` AS `user` ON `attendance`.`user_id` = `user`.`id` WHERE `attendance`.`date` BETWEEN '2026-01-01' AND '2026-01-31';
+[0mGET /api/attendance/monthly?month=1&year=2026 [32m200[0m 4.758 ms - 2[0m
+Executing (default): SELECT `attendance`.`id`, `attendance`.`date`, `attendance`.`check_in`, `attendance`.`check_out`, `attendance`.`status`, `attendance`.`created_by`, `attendance`.`updated_by`, `attendance`.`createdAt`, `attendance`.`updatedAt`, `attendance`.`user_id`, `user`.`id` AS `user.id`, `user`.`username` AS `user.username` FROM `attendances` AS `attendance` LEFT OUTER JOIN `users` AS `user` ON `attendance`.`user_id` = `user`.`id` WHERE `attendance`.`date` BETWEEN '2026-02-01' AND '2026-02-28';
+[0mGET /api/attendance/monthly?month=2&year=2026 [32m200[0m 8.950 ms - 2[0m
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`status`, `users`.`role`, `attendances`.`id` AS `attendances.id`, `attendances`.`date` AS `attendances.date`, `attendances`.`check_in` AS `attendances.check_in`, `attendances`.`check_out` AS `attendances.check_out`, `attendances`.`status` AS `attendances.status`, `attendances`.`created_by` AS `attendances.created_by`, `attendances`.`updated_by` AS `attendances.updated_by`, `attendances`.`createdAt` AS `attendances.createdAt`, `attendances`.`updatedAt` AS `attendances.updatedAt`, `attendances`.`user_id` AS `attendances.user_id` FROM `users` AS `users` LEFT OUTER JOIN `attendances` AS `attendances` ON `users`.`id` = `attendances`.`user_id` AND `attendances`.`date` = '2026-02-28';
+[0mGET /api/attendance/daily?date=2026-02-28 [32m200[0m 48.122 ms - 337[0m
+Executing (default): SELECT `attendance`.`id`, `attendance`.`date`, `attendance`.`check_in`, `attendance`.`check_out`, `attendance`.`status`, `attendance`.`created_by`, `attendance`.`updated_by`, `attendance`.`createdAt`, `attendance`.`updatedAt`, `attendance`.`user_id`, `user`.`id` AS `user.id`, `user`.`username` AS `user.username` FROM `attendances` AS `attendance` LEFT OUTER JOIN `users` AS `user` ON `attendance`.`user_id` = `user`.`id` WHERE `attendance`.`date` BETWEEN '2026-02-01' AND '2026-02-28';
+[0mGET /api/attendance/monthly?month=2&year=2026 [36m304[0m 5.111 ms - -[0m
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`status`, `users`.`role`, `attendances`.`id` AS `attendances.id`, `attendances`.`date` AS `attendances.date`, `attendances`.`check_in` AS `attendances.check_in`, `attendances`.`check_out` AS `attendances.check_out`, `attendances`.`status` AS `attendances.status`, `attendances`.`created_by` AS `attendances.created_by`, `attendances`.`updated_by` AS `attendances.updated_by`, `attendances`.`createdAt` AS `attendances.createdAt`, `attendances`.`updatedAt` AS `attendances.updatedAt`, `attendances`.`user_id` AS `attendances.user_id` FROM `users` AS `users` LEFT OUTER JOIN `attendances` AS `attendances` ON `users`.`id` = `attendances`.`user_id` AND `attendances`.`date` = '2026-02-28';
+[0mGET /api/attendance/daily?date=2026-02-28 [36m304[0m 9.923 ms - -[0m
+Executing (default): SELECT `attendance`.`id`, `attendance`.`date`, `attendance`.`check_in`, `attendance`.`check_out`, `attendance`.`status`, `attendance`.`created_by`, `attendance`.`updated_by`, `attendance`.`createdAt`, `attendance`.`updatedAt`, `attendance`.`user_id`, `user`.`id` AS `user.id`, `user`.`username` AS `user.username` FROM `attendances` AS `attendance` LEFT OUTER JOIN `users` AS `user` ON `attendance`.`user_id` = `user`.`id` WHERE `attendance`.`date` BETWEEN '2026-02-01' AND '2026-02-28';
+[0mGET /api/attendance/monthly?month=2&year=2026 [36m304[0m 11.032 ms - -[0m
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`status`, `users`.`role`, `attendances`.`id` AS `attendances.id`, `attendances`.`date` AS `attendances.date`, `attendances`.`check_in` AS `attendances.check_in`, `attendances`.`check_out` AS `attendances.check_out`, `attendances`.`status` AS `attendances.status`, `attendances`.`created_by` AS `attendances.created_by`, `attendances`.`updated_by` AS `attendances.updated_by`, `attendances`.`createdAt` AS `attendances.createdAt`, `attendances`.`updatedAt` AS `attendances.updatedAt`, `attendances`.`user_id` AS `attendances.user_id` FROM `users` AS `users` LEFT OUTER JOIN `attendances` AS `attendances` ON `users`.`id` = `attendances`.`user_id` AND `attendances`.`date` = '2026-02-28';
+[0mGET /api/attendance/daily?date=2026-02-28 [36m304[0m 4.859 ms - -[0m
+Executing (default): SELECT `attendance`.`id`, `attendance`.`date`, `attendance`.`check_in`, `attendance`.`check_out`, `attendance`.`status`, `attendance`.`created_by`, `attendance`.`updated_by`, `attendance`.`createdAt`, `attendance`.`updatedAt`, `attendance`.`user_id`, `user`.`id` AS `user.id`, `user`.`username` AS `user.username` FROM `attendances` AS `attendance` LEFT OUTER JOIN `users` AS `user` ON `attendance`.`user_id` = `user`.`id` WHERE `attendance`.`date` BETWEEN '2026-02-01' AND '2026-02-28';
+[0mGET /api/attendance/monthly?month=2&year=2026 [36m304[0m 7.033 ms - -[0m
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`status`, `users`.`role`, `attendances`.`id` AS `attendances.id`, `attendances`.`date` AS `attendances.date`, `attendances`.`check_in` AS `attendances.check_in`, `attendances`.`check_out` AS `attendances.check_out`, `attendances`.`status` AS `attendances.status`, `attendances`.`created_by` AS `attendances.created_by`, `attendances`.`updated_by` AS `attendances.updated_by`, `attendances`.`createdAt` AS `attendances.createdAt`, `attendances`.`updatedAt` AS `attendances.updatedAt`, `attendances`.`user_id` AS `attendances.user_id` FROM `users` AS `users` LEFT OUTER JOIN `attendances` AS `attendances` ON `users`.`id` = `attendances`.`user_id` AND `attendances`.`date` = '2026-02-28';
+[0mGET /api/attendance/daily?date=2026-02-28 [36m304[0m 48.388 ms - -[0m
+Executing (default): SELECT `id`, `date`, `check_in`, `check_out`, `status`, `created_by`, `updated_by`, `createdAt`, `updatedAt`, `user_id` FROM `attendances` AS `attendance` WHERE `attendance`.`user_id` = 1 AND `attendance`.`date` = '2026-02-28' LIMIT 1;
+Executing (default): INSERT INTO `attendances` (`id`,`date`,`status`,`created_by`,`createdAt`,`updatedAt`,`user_id`) VALUES (DEFAULT,?,?,?,?,?,?);
+[0mPOST /api/attendance/mark [32m200[0m 18.435 ms - 152[0m
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`status`, `users`.`role`, `attendances`.`id` AS `attendances.id`, `attendances`.`date` AS `attendances.date`, `attendances`.`check_in` AS `attendances.check_in`, `attendances`.`check_out` AS `attendances.check_out`, `attendances`.`status` AS `attendances.status`, `attendances`.`created_by` AS `attendances.created_by`, `attendances`.`updated_by` AS `attendances.updated_by`, `attendances`.`createdAt` AS `attendances.createdAt`, `attendances`.`updatedAt` AS `attendances.updatedAt`, `attendances`.`user_id` AS `attendances.user_id` FROM `users` AS `users` LEFT OUTER JOIN `attendances` AS `attendances` ON `users`.`id` = `attendances`.`user_id` AND `attendances`.`date` = '2026-02-28';
+[0mGET /api/attendance/daily?date=2026-02-28 [32m200[0m 4.710 ms - 335[0m
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`status`, `users`.`role`, `attendances`.`id` AS `attendances.id`, `attendances`.`date` AS `attendances.date`, `attendances`.`check_in` AS `attendances.check_in`, `attendances`.`check_out` AS `attendances.check_out`, `attendances`.`status` AS `attendances.status`, `attendances`.`created_by` AS `attendances.created_by`, `attendances`.`updated_by` AS `attendances.updated_by`, `attendances`.`createdAt` AS `attendances.createdAt`, `attendances`.`updatedAt` AS `attendances.updatedAt`, `attendances`.`user_id` AS `attendances.user_id` FROM `users` AS `users` LEFT OUTER JOIN `attendances` AS `attendances` ON `users`.`id` = `attendances`.`user_id` AND `attendances`.`date` = '2026-01-28';
+[0mGET /api/attendance/daily?date=2026-01-28 [36m304[0m 12.356 ms - -[0m
+Executing (default): SELECT `roles`.`id`, `roles`.`name`, `roles`.`description`, `roles`.`permissions`, `roles`.`createdAt`, `roles`.`updatedAt`, `users`.`id` AS `users.id` FROM `roles` AS `roles` LEFT OUTER JOIN `users` AS `users` ON `roles`.`id` = `users`.`roleId`;
+Executing (default): SELECT `users`.`id`, `users`.`username`, `users`.`email`, `users`.`password`, `users`.`role`, `users`.`mobile`, `users`.`bar_registration_number`, `users`.`office_name`, `users`.`status`, `users`.`createdAt`, `users`.`updatedAt`, `users`.`roleId`, `userRole`.`id` AS `userRole.id`, `userRole`.`name` AS `userRole.name` FROM `users` AS `users` LEFT OUTER JOIN `roles` AS `userRole` ON `users`.`roleId` = `userRole`.`id`;
+[0mGET /api/roles [36m304[0m 29.418 ms - -[0m
+[0mGET /api/users [32m200[0m 20.183 ms - 287[0m
+Executing (default): SELECT `tasks`.`id`, `tasks`.`case_number`, `tasks`.`court`, `tasks`.`cnr_number`, `tasks`.`last_hearing_date`, `tasks`.`next_hearing_date`, `tasks`.`advocates`, `tasks`.`tags`, `tasks`.`doc_collection_request`, `tasks`.`doc_collection_message`, `tasks`.`description`, `tasks`.`createdAt`, `tasks`.`updatedAt`, `tasks`.`clientId`, `tasks`.`client_id`, `client`.`id` AS `client.id`, `client`.`name` AS `client.name`, `client`.`email` AS `client.email`, `client`.`phone` AS `client.phone`, `client`.`address` AS `client.address`, `client`.`tax_id` AS `client.tax_id`, `client`.`status` AS `client.status`, `client`.`createdAt` AS `client.createdAt`, `client`.`updatedAt` AS `client.updatedAt` FROM `tasks` AS `tasks` LEFT OUTER JOIN `clients` AS `client` ON `tasks`.`client_id` = `client`.`id`;
+[0mGET /api/tasks [36m304[0m 105.599 ms - -[0m

@@ -19,25 +19,40 @@ verifyToken = (req, res, next) => {
             });
         }
         req.userId = decoded.id;
-        next();
+        User.findByPk(req.userId).then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "User not found." });
+            }
+            req.userRole = user.role;
+            req.organizationId = user.organization_id;
+            next();
+        });
     });
 };
 
 isAdmin = (req, res, next) => {
-    User.findByPk(req.userId).then(user => {
-        if (user.role === "admin") {
-            next();
-            return;
-        }
-        res.status(403).send({
-            message: "Require Admin Role!"
-        });
+    if (req.userRole === "admin") {
+        next();
         return;
+    }
+    res.status(403).send({
+        message: "Require Admin Role!"
+    });
+};
+
+isOrganization = (req, res, next) => {
+    if (req.userRole === "organization") {
+        next();
+        return;
+    }
+    res.status(403).send({
+        message: "Require Organization Role!"
     });
 };
 
 const authJwt = {
     verifyToken: verifyToken,
-    isAdmin: isAdmin
+    isAdmin: isAdmin,
+    isOrganization: isOrganization
 };
 module.exports = authJwt;

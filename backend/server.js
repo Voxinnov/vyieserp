@@ -3,6 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 
@@ -37,16 +38,32 @@ db.sequelize.sync({ force: false }).then(() => {
     console.log("Drop and Resync Db");
 });
 
-// simple route
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome to Legal ERP Backend application." });
-});
-
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/task.routes')(app);
+require('./app/routes/case_intake.routes')(app);
+require('./app/routes/todo.routes')(app);
+require('./app/routes/client.routes')(app);
+require('./app/routes/draft.routes')(app);
+require('./app/routes/court.routes')(app);
+require('./app/routes/term.routes')(app);
+require('./app/routes/draft_type.routes')(app);
+require('./app/routes/case_billing.routes')(app);
+require('./app/routes/organization.routes')(app);
 // require('./app/routes/matter.routes')(app); // To be implemented
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+// Serve uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8000;

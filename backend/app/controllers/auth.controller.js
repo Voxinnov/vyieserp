@@ -5,30 +5,64 @@ const User = db.user;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-exports.signup = (req, res) => {
-    // Save User to Database
-    User.create({
-        username: req.body.username,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8),
-        role: req.body.role ? req.body.role : 'user', // default role
-        mobile: req.body.mobile,
-        office_name: req.body.office_name,
-        bar_registration_number: req.body.bar_registration_number
-    })
-        .then(user => {
-            res.send({ message: "User was registered successfully!" });
-        })
-        .catch(err => {
-            res.status(500).send({ message: err.message });
+exports.signup = async (req, res) => {
+    try {
+        let organizationId = null;
+        let roleId = null;
+
+        if (req.body.role === 'organization') {
+            const org = await db.organization.create({
+                name: req.body.office_name || req.body.organizationName || req.body.username,
+                email: req.body.email,
+                mobile: req.body.mobile,
+                number_of_users: req.body.number_of_users,
+                address: req.body.address,
+                city: req.body.city,
+                state: req.body.state,
+                country: req.body.country,
+                pincode: req.body.pincode,
+                logo: req.body.logo
+            });
+            organizationId = org.id;
+
+            // Create default 'Admin' role for the organization
+            const adminRole = await db.role.create({
+                name: 'Admin',
+                organization_id: organizationId,
+                permissions: [
+                    { page: 'all', read: true, create: true, update: true, delete: true }
+                ]
+            });
+            roleId = adminRole.id;
+        }
+
+        const user = await User.create({
+            username: req.body.username,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 8),
+            role: req.body.role ? req.body.role : 'user',
+            mobile: req.body.mobile,
+            office_name: req.body.office_name,
+            bar_registration_number: req.body.bar_registration_number,
+            organization_id: organizationId,
+            role_id: roleId
         });
+
+        res.send({ message: "User was registered successfully!", userId: user.id });
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
 };
 
 exports.signin = (req, res) => {
     User.findOne({
         where: {
             username: req.body.username
-        }
+        },
+        include: [
+            { model: db.role, as: 'custom_role' },
+            { model: db.organization, as: 'organization' }
+        ]
     })
         .then(user => {
             if (!user) {
@@ -56,6 +90,9 @@ exports.signin = (req, res) => {
                 username: user.username,
                 email: user.email,
                 roles: user.role,
+                organization_id: user.organization_id,
+                role_id: user.role_id,
+                permissions: user.custom_role ? user.custom_role.permissions : null,
                 accessToken: token
             });
         })

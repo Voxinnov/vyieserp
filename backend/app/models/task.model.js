@@ -30,6 +30,14 @@ module.exports = (sequelize, Sequelize) => {
         },
         description: {
             type: Sequelize.TEXT
+        },
+        status: {
+            type: Sequelize.STRING,
+            defaultValue: 'new'
+        },
+        assigned_to: {
+            type: Sequelize.INTEGER,
+            allowNull: true
         }
     });
 
